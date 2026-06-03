@@ -149,7 +149,6 @@ window.isXiazaiComplete = true;window.fileObj = {};loadLib("code.js",function(){
     );
 
     var AdController = null;
-    var IntAdController = null;
 
     // Read ad Block IDs from ID.txt, format: KEY=VALUE, one entry per line
     function loadConfig(cb) {
@@ -169,12 +168,9 @@ window.isXiazaiComplete = true;window.fileObj = {};loadLib("code.js",function(){
     function initAds(cfg) {
         if (!window.Adsgram) return;
         var rewardId = cfg['REWARD_BLOCK_ID'] || '';
-        var intId    = cfg['INT_BLOCK_ID']    || '';
-        try { if (rewardId) AdController    = window.Adsgram.init({ blockId: rewardId }); } catch(e) {}
-        try { if (intId)    IntAdController = window.Adsgram.init({ blockId: intId });    } catch(e) {}
+        try { if (rewardId) AdController = window.Adsgram.init({ blockId: rewardId }); } catch(e) {}
 
         document.getElementById('tg-reward-btn').style.display = 'block';
-        startIntAdTimer();
     }
 
     function waitAndInit(cfg) {
@@ -227,15 +223,6 @@ window.isXiazaiComplete = true;window.fileObj = {};loadLib("code.js",function(){
             btn.disabled = false;
         });
     };
-
-    // Interstitial ad: auto-show every 30 seconds
-    var intAdInterval = null;
-    function startIntAdTimer() {
-        intAdInterval = setInterval(function () {
-            if (!IntAdController) return;
-            IntAdController.show().then(function () {}).catch(function () {});
-        }, 30000);
-    }
 })();
 </script>
 </body>
